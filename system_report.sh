@@ -83,6 +83,8 @@ MULTI_PATH_CHECK
 OCFS2_CHECK
 sudo nfsstat -m
 df -Th
+ntpq -p
+dstat -lcdngy 1 3
 
 echo -e "\n"
 UxenVersion=`cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d'`
