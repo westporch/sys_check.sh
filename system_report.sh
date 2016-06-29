@@ -1,6 +1,11 @@
 #/bin/bash
 #Hyun-gwan Seo
 
+function LINE_DRAW()
+{
+    echo -e "-----------------------------------------------"
+}
+
 function PROCESS_CHECK()
 {
     echo -e "-------- Process Check --------\n"
@@ -13,21 +18,27 @@ function PROCESS_CHECK()
         echo -e "`ps aux | grep  ${process[$idx]}`"
         echo ""
     done
-    echo -e "-----------------------------------------------"
+    LINE_DRAW
+}
+
+function VM_LIST_CHECK()
+{
+    echo -e "-------- VM List Check --------\n"
+    sudo xl li
+    LINE_DRAW
 }
 
 function UXEN_VERSION_CHECK()
 {
-    echo -e "--------- UXEN_VERSION Check ----------\n"
+    echo -e "\n--------- UXEN_VERSION Check ----------"
     cat /home/orchard/uxen/docs/VERSION 2> /dev/null
     cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d'
-    echo -e "-----------------------------------------------"
-
+    LINE_DRAW
 }
 
 function VCPUS_RATIO_CHECK()
 {
-    echo -e "------ VCPUs Ration Check --------\n"
+    echo -e "\n------ VCPUs Ration Check --------"
 
     cores=`sudo xl info | grep nr_cpus | awk -F ' ' '{ print $3 }'`
     vcpus=`sudo xl li | sed '1d' | awk -F' ' '{ sum += $4; } END { print sum; }'`
@@ -35,28 +46,29 @@ function VCPUS_RATIO_CHECK()
     #vcpus_ratio=`echo "scale=2; ($vcpus/$cores)*100" | bc`
     vcpus_ratio=`echo "$vcpus $cores" | awk '{printf "%.2f \n", $1/$2}'`
     echo -e "VCPUs 사용량(%) = $vcpus_ratio"
-    echo -e "-----------------------------------------------"
+    LINE_DRAW
 
 }
 
 function MULTI_PATH_CHECK()
 {
-    echo -e "--------- Multi Path Check --------\n"
+    echo -e "\n--------- Multi Path Check --------"
     sudo multipath -ll
-    echo -e "-----------------------------------------------"
+    LINE_DRAW
 
 }
 
 function OCFS2_CHECK()
 {
-    echo -e "-------- OCFS2 Check ---------\n"
+    echo -e "\n-------- OCFS2 Check ---------"
     /etc/init.d/ocfs2 status
     /etc/init.d/o2cb status
-    echo -e "-----------------------------------------------"
+    LINE_DRAW
 }
 
 date
 PROCESS_CHECK
+VM_LIST_CHECK
 UXEN_VERSION_CHECK
 VCPUS_RATIO_CHECK
 MULTI_PATH_CHECK
