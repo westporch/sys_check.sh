@@ -39,7 +39,7 @@ function UXEN_VERSION_CHECK()
 {
     echo -e "\n--------- UXEN_VERSION Check ----------"
     cat /home/orchard/uxen/docs/VERSION | sed '2d' 2> /dev/null
-    cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d'
+    cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d' 2> /dev/null
     LINE_DRAW
 }
 
