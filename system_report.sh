@@ -8,7 +8,7 @@ function LINE_DRAW()
 
 function PROCESS_CHECK()
 {
-    echo -e "-------- Process Check --------\n"
+    echo -e "\n-------- Process Check --------"
 
     process=("nginx" "uxen" "ntp")
 
@@ -23,8 +23,15 @@ function PROCESS_CHECK()
 
 function VM_LIST_CHECK()
 {
-    echo -e "-------- VM List Check --------\n"
+    echo -e "\n-------- VM List Check --------"
     sudo xl li
+    LINE_DRAW
+}
+
+function DMESG_CHECK()
+{
+    echo -e "\n-------- Dmesg Check --------"
+    dmesg -T | grep --color=yes error | tail
     LINE_DRAW
 }
 
@@ -69,6 +76,7 @@ function OCFS2_CHECK()
 date
 PROCESS_CHECK
 VM_LIST_CHECK
+DMESG_CHECK
 UXEN_VERSION_CHECK
 VCPUS_RATIO_CHECK
 MULTI_PATH_CHECK
