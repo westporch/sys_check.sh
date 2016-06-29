@@ -38,7 +38,7 @@ function DMESG_CHECK()
 function UXEN_VERSION_CHECK()
 {
     echo -e "\n--------- UXEN_VERSION Check ----------"
-    cat /home/orchard/uxen/docs/VERSION 2> /dev/null
+    cat /home/orchard/uxen/docs/VERSION | sed '2d' 2> /dev/null
     cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d'
     LINE_DRAW
 }
@@ -92,9 +92,9 @@ OCFS2_CHECK
 sudo nfsstat -m
 df -Th
 ntpq -p
-dstat -lcdngy 1 3
+dstat -lcdngy 1 5
 
 echo -e "\n"
-UxenVersion=`cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d'`
+UxenVersion=`cat /home/orchard/uxen/docs/VERSION | sed '2d'`
 ManagementIP=`sudo ifconfig | grep "inet addr:192.168.0." | awk -F ':'  '{ print $2 }' | awk -F ' ' '{ print $1 }'`
 echo -e "Your_value, `uname -n`, $UxenVersion, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
