@@ -57,6 +57,13 @@ function VCPUS_RATIO_CHECK()
 
 }
 
+function BONDING_CHECK()
+{
+    echo -e "\n------ Bonding Check --------"
+    grep -r "down" /proc/net/bonding
+    LINE_DRAW
+}
+
 function MULTI_PATH_CHECK()
 {
     echo -e "\n--------- Multi Path Check --------"
@@ -79,6 +86,7 @@ VM_LIST_CHECK
 DMESG_CHECK
 UXEN_VERSION_CHECK
 VCPUS_RATIO_CHECK
+BONDING_CHECK
 MULTI_PATH_CHECK
 OCFS2_CHECK
 sudo nfsstat -m
