@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 #Hyun-gwan Seo
 
 function LINE_DRAW()
