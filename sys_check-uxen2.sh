@@ -59,7 +59,7 @@ function VCPUS_RATIO_CHECK()
 
 function BONDING_CHECK()
 {
-    echo -e "\n------ Bonding Check --------"
+    echo -e "\n------ Bonding Down Check --------"
     grep --color=yes -r "down" /proc/net/bonding
     LINE_DRAW
 }
