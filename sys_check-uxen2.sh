@@ -87,6 +87,13 @@ function OCFS2_CHECK()
     LINE_DRAW
 }
 
+function CHECK_DF()
+{
+    df -Th
+    df -i
+    LINE_DRAW
+}
+
 date
 PROCESS_CHECK
 VM_LIST_CHECK
@@ -97,7 +104,7 @@ BONDING_CHECK
 MULTI_PATH_CHECK
 OCFS2_CHECK
 sudo nfsstat -m
-df -Th
+CHECK_DF
 ntpq -p
 dstat -lcdngy 1 5
 
