@@ -39,12 +39,11 @@ function UXEN_VERSION_CHECK()
 {
     echo -e "\n--------- UXEN_VERSION Check ----------"
    
-    if [-d /home/orchard/uxen]; then                                             # uxen2
-        cat /home/orchard/uxen/docs/VERSION | sed '2d' 2> /dev/null             # Version number
-        cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d' 2> /dev/null    # Revision number   
-    else                                                                        # uxen3
-        cat /opt/uxen3/docs/VERSION
-    fi
+    cat /home/orchard/uxen/docs/VERSION | sed '2d' 2> /dev/null             # uxen2 (Version number)
+    cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d' 2> /dev/null    # uxen2 (Revision number)  
+    cat /opt/uxen3/docs/VERSION 2> /dev/null                                # uxen3 (Version number)
+
+    
     
     #cat /home/orchard/uxen/docs/VERSION | sed '2d' 2> /dev/null
     #cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d' 2> /dev/null
