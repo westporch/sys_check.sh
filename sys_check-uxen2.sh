@@ -6,6 +6,13 @@ function DRAW_A_LINE()
     echo -e "-----------------------------------------------"
 }
 
+function CHECK_MEMORY()
+{
+    free -h
+    echo -e "-----------------------------------------------"
+}
+
+
 function PROCESS_CHECK()
 {
     echo -e "\n-------- Process Check --------"
@@ -89,6 +96,7 @@ function CHECK_DF()
 }
 
 date
+CHECK_MEMORY
 PROCESS_CHECK
 VM_LIST_CHECK
 DMESG_CHECK
