@@ -1,7 +1,7 @@
 #!/bin/bash
 #Hyun-gwan Seo
 
-function LINE_DRAW()
+function DRAW_A_LINE()
 {
     echo -e "-----------------------------------------------"
 }
@@ -18,21 +18,21 @@ function PROCESS_CHECK()
         echo -e "`ps aux | grep  ${process[$idx]}`"
         echo ""
     done
-    LINE_DRAW
+    DRAW_A_LINE
 }
 
 function VM_LIST_CHECK()
 {
     echo -e "\n-------- VM List Check --------"
     sudo xl li
-    LINE_DRAW
+    DRAW_A_LINE
 }
 
 function DMESG_CHECK()
 {
     echo -e "\n-------- Dmesg Check --------"
     dmesg -T | grep --color=yes error | tail
-    LINE_DRAW
+    DRAW_A_LINE
 }
 
 function UXEN_VERSION_CHECK()
@@ -43,11 +43,7 @@ function UXEN_VERSION_CHECK()
     cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d' 2> /dev/null    # uxen2 (Revision number)  
     cat /opt/uxen3/docs/VERSION 2> /dev/null                                # uxen3 (Version number)
 
-    
-    
-    #cat /home/orchard/uxen/docs/VERSION | sed '2d' 2> /dev/null
-    #cat /var/www/uxen/docs/Changelog | head -n 2 | sed '1d' 2> /dev/null
-    LINE_DRAW
+    DRAW_A_LINE
 }
 
 function VCPUS_RATIO_CHECK()
@@ -60,23 +56,21 @@ function VCPUS_RATIO_CHECK()
     #vcpus_ratio=`echo "scale=2; ($vcpus/$cores)*100" | bc`
     vcpus_ratio=`echo "$vcpus $cores" | awk '{printf "%.2f \n", $1/$2}'`
     echo -e "VCPUs 사용량(%) = $vcpus_ratio"
-    LINE_DRAW
-
+    DRAW_A_LINE
 }
 
 function BONDING_CHECK()
 {
     echo -e "\n------ Bonding Down Check --------"
     grep --color=yes -r "down" /proc/net/bonding
-    LINE_DRAW
+    DRAW_A_LINE
 }
 
 function MULTI_PATH_CHECK()
 {
     echo -e "\n--------- Multi Path Check --------"
     sudo multipath -ll
-    LINE_DRAW
-
+    DRAW_A_LINE
 }
 
 function OCFS2_CHECK()
@@ -84,14 +78,14 @@ function OCFS2_CHECK()
     echo -e "\n-------- OCFS2 Check ---------"
     /etc/init.d/ocfs2 status
     /etc/init.d/o2cb status
-    LINE_DRAW
+    DRAW_A_LINE
 }
 
 function CHECK_DF()
 {
     df -Th
     df -i
-    LINE_DRAW
+    DRAW_A_LINE
 }
 
 date
@@ -109,6 +103,7 @@ ntpq -p
 dstat -lcdngy 1 5
 
 echo -e "\n"
-UxenVersion=`cat /home/orchard/uxen/docs/VERSION | sed '2d'`
+Uxen2Version=`cat /home/orchard/uxen/docs/VERSION | sed '2d'`
+Uxen3Version=`cat /opt/uxen3/docs/VERSION`
 ManagementIP=`sudo ifconfig | grep "inet addr:192.168.0." | awk -F ':'  '{ print $2 }' | awk -F ' ' '{ print $1 }'`
-echo -e "Your_value, `uname -n`, $UxenVersion, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
+echo -e "Your_value, `uname -n`, $Uxen2Version, $Uxen3Version, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
