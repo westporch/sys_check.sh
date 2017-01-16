@@ -28,12 +28,20 @@ function PROCESS_CHECK()
     DRAW_A_LINE
 }
 
-function VM_LIST_CHECK()
+function GET_VM_LIST()
 {
     echo -e "\n-------- VM List Check --------"
     sudo xl li
     DRAW_A_LINE
 }
+
+function GET_DOM0_MEM()
+{
+    echo -e "\n-------- Dom0 Memory Check --------"
+    xl info | grep -E "total_memory|free_memory"
+    DRAW_A_LINE
+}
+
 
 function DMESG_CHECK()
 {
@@ -98,7 +106,8 @@ function CHECK_DF()
 date
 CHECK_MEMORY
 PROCESS_CHECK
-VM_LIST_CHECK
+GET_VM_LIST
+GET_DOM0_MEM
 DMESG_CHECK
 UXEN_VERSION_CHECK
 VCPUS_RATIO_CHECK
