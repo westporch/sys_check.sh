@@ -149,7 +149,8 @@ function REFINE_SYSLOG()
     sudo cat $LOG_HOME/syslog.1 >> $ENTIRE_SYSLOG
     sudo cat $LOG_HOME/syslog >> $ENTIRE_SYSLOG
 
-    cat $ENTIRE_SYSLOG | grep -Ev "Connection from UDP|orchard|irqbalance|drop_caches" > $REFINED_SYSLOG
+    # cron에 등록되면 자동으로 메일이 발송됨. 메일을 안쓰므로 no MTA installed 메시지는 무시해도 됨.
+    cat $ENTIRE_SYSLOG | grep -Ev "Connection from UDP|orchard|irqbalance|drop_caches|MTA" > $REFINED_SYSLOG
 
     echo -e "Please see /tmp/refined_syslog"
     
