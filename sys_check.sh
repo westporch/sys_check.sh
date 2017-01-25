@@ -193,7 +193,8 @@ function REFINE_AUTH_LOG()
     sudo cat $LOG_HOME/auth.log.1 >> $ENTIRE_AUTH_LOG
     sudo cat $LOG_HOME/auth.log >> $ENTIRE_AUTH_LOG
 
-    cat $ENTIRE_AUTH_LOG | grep -Ev "opened|closed|orchard" > /tmp/refined_auth.log
+    # failure 또는 FAILED가 포함된 라인을 추출함
+    cat $ENTIRE_AUTH_LOG | grep -E "failure|FAILED" > /tmp/refined_auth.log 
     echo -e "Please see /tmp/refined_auth.log"
 }
 
