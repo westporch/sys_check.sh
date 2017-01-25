@@ -147,8 +147,8 @@ function REFINE_SYSLOG()
     REFINED_SYSLOG=/tmp/refined_syslog
 
     ls -r $LOG_HOME/syslog*.gz | xargs zcat > $ENTIRE_SYSLOG
-    cat $LOG_HOME/syslog.1 >> $ENTIRE_SYSLOG
-    cat $LOG_HOME/syslog >> $ENTIRE_SYSLOG
+    sudo cat $LOG_HOME/syslog.1 >> $ENTIRE_SYSLOG
+    sudo cat $LOG_HOME/syslog >> $ENTIRE_SYSLOG
 
     cat $ENTIRE_SYSLOG | grep -Ev "Connection from UDP|orchard|irqbalance|drop_caches" > $REFINED_SYSLOG
 
@@ -164,8 +164,8 @@ function REFINE_MESSAGES()
     ENTIRE_MESSAGE_LOG=/tmp/entire_messages
 
     ls -r $LOG_HOME/messages*.gz | xargs zcat > $ENTIRE_MESSAGE_LOG
-    cat $LOG_HOME/messages.1 >> $ENTIRE_MESSAGE_LOG
-    cat $LOG_HOME/messages >> $ENTIRE_MESSAGE_LOG
+    sudo cat $LOG_HOME/messages.1 >> $ENTIRE_MESSAGE_LOG
+    sudo cat $LOG_HOME/messages >> $ENTIRE_MESSAGE_LOG
 
     cat $ENTIRE_MESSAGE_LOG | grep --color=yes -E "Failed|error|ERROR" > /tmp/refined_messages
     echo -e "Please see /tmp/refined_messages"
@@ -179,8 +179,8 @@ function REFINE_KERN_LOG()
     ENTIRE_KERN_LOG=/tmp/entire_kern.log
 
     ls -r $LOG_HOME/kern.log*.gz | xargs zcat > $ENTIRE_KERN_LOG
-    cat $LOG_HOME/kern.log.1 >> $ENTIRE_KERN_LOG
-    cat $LOG_HOME/kern.log >> $ENTIRE_KERN_LOG
+    sudo cat $LOG_HOME/kern.log.1 >> $ENTIRE_KERN_LOG
+    sudo cat $LOG_HOME/kern.log >> $ENTIRE_KERN_LOG
     echo -e "Please see /tmp/refined_kern.log"
 }
 
@@ -191,8 +191,8 @@ function REFINE_AUTH_LOG()
     ENTIRE_AUTH_LOG=/tmp/entire_auth.log
 
     ls -r $LOG_HOME/auth.log*.gz | xargs zcat > $ENTIRE_AUTH_LOG
-    cat $LOG_HOME/auth.log.1 >> $ENTIRE_AUTH_LOG
-    cat $LOG_HOME/auth.log >> $ENTIRE_AUTH_LOG
+    sudo cat $LOG_HOME/auth.log.1 >> $ENTIRE_AUTH_LOG
+    sudo cat $LOG_HOME/auth.log >> $ENTIRE_AUTH_LOG
     echo -e "Please see /tmp/refined_auth.log"
 }
 
