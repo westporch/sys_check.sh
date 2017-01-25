@@ -167,7 +167,7 @@ function REFINE_MESSAGES()
     sudo cat $LOG_HOME/messages.1 >> $ENTIRE_MESSAGE_LOG
     sudo cat $LOG_HOME/messages >> $ENTIRE_MESSAGE_LOG
 
-    cat $ENTIRE_MESSAGE_LOG | grep --color=yes -Ev "Failed|error|ERROR" > /tmp/refined_messages
+    cat $ENTIRE_MESSAGE_LOG | grep -Ev "Failed|error|ERROR" > /tmp/refined_messages
     echo -e "Please see /tmp/refined_messages"
 }
 
@@ -194,7 +194,7 @@ function REFINE_AUTH_LOG()
     sudo cat $LOG_HOME/auth.log.1 >> $ENTIRE_AUTH_LOG
     sudo cat $LOG_HOME/auth.log >> $ENTIRE_AUTH_LOG
 
-    cat $ENTIRE_AUTH_LOG | grep --color=yes -Ev "opened for user root|closed for user root|orchard" > /tmp/refined_auth.log
+    cat $ENTIRE_AUTH_LOG | grep -Ev "opened for user root|closed for user root|orchard" > /tmp/refined_auth.log
     echo -e "Please see /tmp/refined_auth.log"
 }
 
