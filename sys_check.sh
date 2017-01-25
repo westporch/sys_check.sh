@@ -167,7 +167,7 @@ function REFINE_MESSAGES()
     sudo cat $LOG_HOME/messages.1 >> $ENTIRE_MESSAGE_LOG
     sudo cat $LOG_HOME/messages >> $ENTIRE_MESSAGE_LOG
 
-    cat $ENTIRE_MESSAGE_LOG | grep --color=yes -E "Failed|error|ERROR" > /tmp/refined_messages
+    cat $ENTIRE_MESSAGE_LOG | grep --color=yes -Ev "Failed|error|ERROR" > /tmp/refined_messages
     echo -e "Please see /tmp/refined_messages"
 }
 
@@ -184,7 +184,7 @@ function REFINE_KERN_LOG()
     echo -e "Please see /tmp/refined_kern.log"
 }
 
-# /var/log/auth.log 파일을 하나로 합침. 
+# /var/log/auth.log 파일을 하나로 합치고 불필요한 로그를 삭제함.
 function REFINE_AUTH_LOG()
 {
     echo -e "\n---------------- Refine /var/log/auth.log* ------------------"
@@ -193,6 +193,8 @@ function REFINE_AUTH_LOG()
     ls -r $LOG_HOME/auth.log*.gz | xargs zcat > $ENTIRE_AUTH_LOG
     sudo cat $LOG_HOME/auth.log.1 >> $ENTIRE_AUTH_LOG
     sudo cat $LOG_HOME/auth.log >> $ENTIRE_AUTH_LOG
+
+    cat $ENTIRE_AUTH_LOG | grep --color=yes -Ev "opened for user root|closed for user root|orchard" > /tmp/refined_auth.log
     echo -e "Please see /tmp/refined_auth.log"
 }
 
