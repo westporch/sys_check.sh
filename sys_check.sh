@@ -150,6 +150,7 @@ function REFINE_SYSLOG()
     sudo cat $LOG_HOME/syslog >> $ENTIRE_SYSLOG
 
     # cron에 등록되면 자동으로 메일이 발송됨. 메일을 안쓰므로 no MTA installed 메시지는 무시해도 됨.
+    # 아래 필터에는 적용하지 않았지만 pdu 에러도 무시해도 됨.
     cat $ENTIRE_SYSLOG | grep -Ev "Connection from UDP|orchard|irqbalance|drop_caches|MTA|CRON|rsyslogd" > $REFINED_SYSLOG
 
     echo -e "Please see /tmp/refined_syslog"
