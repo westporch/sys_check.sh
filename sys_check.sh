@@ -235,6 +235,7 @@ function MAIN()
     CHECK_MEMORY
 
     DMESG_CHECK
+    lastlog
     GET_SYSTEM_LOG
 
     GET_SUMMARY
