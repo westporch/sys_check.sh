@@ -121,6 +121,7 @@ dstat -lcdngy 1 5
 
 echo -e "\n"
 Uxen2Version=`cat /home/orchard/uxen/docs/VERSION | sed '2d'`
+Uxen2newVersion=`cat /home/orchard/uxen_new/VERSION | sed '2d'`
 Uxen3Version=`cat /opt/uxen3/docs/VERSION`
 ManagementIP=`sudo ifconfig | grep "inet addr:192.168.0." | awk -F ':'  '{ print $2 }' | awk -F ' ' '{ print $1 }'`
-echo -e "Your_value, `uname -n`, $Uxen2Version, $Uxen3Version, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
+echo -e "Your_value, `uname -n`, $Uxen2Version, $Uxen2newVersion, $Uxen3Version, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
