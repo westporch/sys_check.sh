@@ -135,30 +135,6 @@ function CHECK_DF()
     DRAW_A_LINE
 }
 
-<<<<<<< HEAD
-date
-CHECK_MEMORY
-PROCESS_CHECK
-GET_VM_LIST
-GET_DOM0_MEM
-DMESG_CHECK
-UXEN_VERSION_CHECK
-VCPUS_RATIO_CHECK
-BONDING_CHECK
-MULTI_PATH_CHECK
-OCFS2_CHECK
-sudo nfsstat -m
-CHECK_DF
-ntpq -p
-dstat -lcdngy 1 5
-
-echo -e "\n"
-Uxen2Version=`cat /home/orchard/uxen/docs/VERSION | sed '2d'`
-Uxen2newVersion=`cat /home/orchard/uxen_new/VERSION | sed '2d'`
-Uxen3Version=`cat /opt/uxen3/docs/VERSION`
-ManagementIP=`sudo ifconfig | grep "inet addr:192.168.0." | awk -F ':'  '{ print $2 }' | awk -F ' ' '{ print $1 }'`
-echo -e "Your_value, `uname -n`, $Uxen2Version, $Uxen2newVersion, $Uxen3Version, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
-=======
 LOG_HOME=/var/log
 
 # /var/log/syslog* 파일을 하나로 합치고 불필요한 로그를 삭제함.
@@ -266,4 +242,4 @@ function MAIN()
 }
 
 MAIN
->>>>>>> 10648c65fcca787f791603b364eecdcd341dbb38
+
