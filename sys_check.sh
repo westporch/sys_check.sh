@@ -80,13 +80,14 @@ function GET_UXEN_DETAIL_VERSION()
     if [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen ]
     then
         cat /home/orchard/uxen/docs/VERSIONS  | sed '2d'            # uxen2 (Version number)
-    elif [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen_new ]; then
+    elif [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen_new ]
+    then
         cat /home/orchard/uxen_new/docs/VERSIONS  | sed '2d'            # uxen2 (Version number)
-    elif [ $UXEN_MAIN_VERSION = "3" ] && [ -d /opt/uxen3 ]; then
+    elif [ $UXEN_MAIN_VERSION = "3" ] && [ -d /opt/uxen3 ]
+    then
         cat /opt/uxen3/docs/VERSION
     fi
 }
-
 
 #function GET_UXEN_VERSION()
 #{
@@ -237,6 +238,60 @@ function GET_SYSTEM_LOG()
     REFINE_AUTH_LOG
 }
 
+:' uxenapi.log에서 불필요한 내용은 삭제하는 함수
+   최초 작성: 2017.02.06
+   TODO: ENTIRE_UXEN_API_LOG, REFINED_UXEN_API_LOG 파일을 만드는 함수를 각각 분리(?)
+'
+function REFINE_UXEN_LOG()
+{
+    DEFAULT_UXEN2_API_LOG=/home/orchard/uxen/var/log/uxenapi.log*
+    DEFAULT_GUNICORN_LOG=/home/orchard/uxen/var/log/gunicorn-uxen-error.log    
+    DEFAULT_UXEN3_API_LOG=/opt/uxen3/var/log/uxenapi.log*
+    DEFAULT_UWSGI_LOG=/opt/uxen3/var/log/uwsgi.log
+
+    SECOND_UXEN2_API_LOG=/home/orchard/uxen_new/var/log/uxenapi.log*
+    SECOND_GUNICORN_LOG=/home/orchard/uxen_new/var/log/gunicorn-uxen-error.log    
+
+    ENTIRE_UXEN2_API_LOG=/tmp/entire_uxenapi.log     # ENTIRE_UXEN2_API_LOG와 ENTIRE_UXEN3_API_LOG의 경로는 같지만 직관적으로 이해하기 쉽도록 변수를 별도로 선언함
+    ENTIRE_UXEN3_API_LOG=/tmp/entire_uxenapi.log
+
+    REFINED_UXEN2_API_LOG=/tmp/refined_uxenapi.log   # REFINED_UXEN2_API_LOG와 REFINED_UXEN3_API_LOG의 경로는 같지만 직관적으로 이해하기 쉽도록 변수를 별도로 선언함
+    REFINED_UXEN3_API_LOG=/tmp/refined_uxenapi.log
+    REFINED_GUNICORN_LOG=/tmp/refined_gunicorn-uxen-error.log
+    REFINED_UWSGI_LOG=/tmp/uwsgi.log
+    
+    if [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen ]                                   # uxen2에서 /home/orchard/uxen 디렉토리가 존재할 경우
+    then
+        echo -e "\n---------------- Refine $DEFAULT_UXEN2_API_LOG ------------------"
+        ls -r $DEFAULT_UXEN2_API_LOG | xargs cat > $ENTIRE_UXEN2_API_LOG                           # uxenapi.log* 파일을 오름차순(시간) 1개로 합침
+        cat $ENTIRE_UXEN2_API_LOG | grep -Ev "models|viewsets|vmiface" > $REFINED_UXEN2_API_LOG    # ENTIRE_UXEN2_API_LOG 파일에서 불필요한 내용을 제외함
+
+        echo -e "\n---------------- Refine $DEFAULT_GUNICORN_LOG ------------------"
+        cat $DEFAULT_GUNICORN_LOG | grep -Ev "Starting|worker|Listening" > $REFINED_GUNICORN_LOG   # gunicorn-uxen-error.log 파일에서 불필요한 내용을 제외함
+    elif [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen_new ]                             # uxen2에서 /home/orchard/uxen_new 디렉토리가 존재할 경우
+    then
+        echo -e "\n---------------- Refine $SECOND_UXEN2_API_LOG ------------------"
+        ls -r $SECOND_UXEN2_API_LOG | xargs cat > $ENTIRE_UXEN2_API_LOG                            # uxenapi.log* 파일을 오름차순(시간) 1개로 합침 
+        cat $ENTIRE_UXEN2_API_LOG | grep -Ev "models|viewsets|vmiface" > $REFINED_UXEN2_API_LOG    # ENTIRE_UXEN2_API_LOG 파일에서 불필요한 내용을 제외함
+
+        echo -e "\n---------------- Refine $SECOND_GUNICORN_LOG ------------------"
+        cat $SECOND_GUNICORN_LOG | grep -Ev "Starting|worker|Listening" > $REFINED_GUNICORN_LOG    # gunicorn-uxen-error.log 파일에서 불필요한 내용을 제외함
+    elif [ $UXEN_MAIN_VERSION = "3" ] && [ -d /opt/uxen3 ]                                         # uxen3에서 /opt/uxen3 디렉토리가 존재할 경우 
+    then
+        echo -e "\n---------------- Refine $DEFAULT_UXEN3_API_LOG ------------------"
+        ls -r $DEFAULT_UXEN3_API_LOG | xargs cat > $ENTIRE_UXEN3_API_LOG                           # uxenapi.log* 파일을 오름차순(시간) 1개로 합침
+        cat $ENTIRE_UXEN3_API_LOG | grep -Ev "models|viewsets|vmiface" > $REFINED_UXEN3_API_LOG    # ENTIRE_UXEN3_API_LOG 파일에서 불필요한 내용을 제외함
+
+        echo -e "\n---------------- Refine $DEFAULT_UWSGI_LOG  ------------------"
+        cat $DEFAULT_UWSGI_LOG | grep -Ev "generated" > $REFINED_UWSGI_LOG                         # uwsgi.log 파일에서 불필요한 내용을 제외함
+    fi
+}
+
+# UXEN 로그를 가져오는 함수
+function GET_UXEN_LOG()
+{
+    REFINE_UXEN_LOG
+}
 
 function GET_SUMMARY()
 {
@@ -267,6 +322,7 @@ function MAIN()
     DMESG_CHECK
     lastlog
     GET_SYSTEM_LOG
+    GET_UXEN_LOG
 
     GET_SUMMARY
 }
