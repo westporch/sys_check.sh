@@ -59,16 +59,45 @@ function DMESG_CHECK()
     DRAW_A_LINE
 }
 
-function GET_UXEN_VERSION()
+UXEN_MAIN_VERSION=""    # 전역 변수
+
+# UXEN의 메인 버전을 확인하는 함수 (UXEN2인지 UXEN3인지 확인함)
+function GET_UXEN_MAIN_VERSION()
+{
+    if [ -d /home/orchard/uxen ] || [ -d /home/orchard/uxen_new ]   # ||(OR)를 사용할 경우 세미콜론을 붙이지 않는다.
+    then
+        UXEN_MAIN_VERSION="2"
+    elif [ -d /opt/uxen3 ]; then
+        UXEN_MAIN_VERSION="3"
+    fi
+}
+
+# UXEN의 세부 버전을 확인하는 함수
+function GET_UXEN_DETAIL_VERSION()
 {
     echo -e "\n--------------- UXEN_VERSION Check ----------------"
-   
-    cat /home/orchard/uxen/docs/VERSION  | sed '2d'            # uxen2 (Version number)
-    cat /var/www/uxen/docs/Changelog  | head -n 2 | sed '1d'   # uxen2 (Revision number)  
-    cat /opt/uxen3/docs/VERSION 2> /dev/null                   # uxen3 (Version number)
 
-    DRAW_A_LINE
+    if [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen ]
+    then
+        cat /home/orchard/uxen/docs/VERSIONS  | sed '2d'            # uxen2 (Version number)
+    elif [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen_new ]; then
+        cat /home/orchard/uxen_new/docs/VERSIONS  | sed '2d'            # uxen2 (Version number)
+    elif [ $UXEN_MAIN_VERSION = "3" ] && [ -d /opt/uxen3 ]; then
+        cat /opt/uxen3/docs/VERSION
+    fi
 }
+
+
+#function GET_UXEN_VERSION()
+#{
+#    echo -e "\n--------------- UXEN_VERSION Check ----------------"
+#   
+#    cat /home/orchard/uxen/docs/VERSION  | sed '2d'            # uxen2 (Version number)
+#    cat /var/www/uxen/docs/Changelog  | head -n 2 | sed '1d'   # uxen2 (Revision number)  
+#    cat /opt/uxen3/docs/VERSION 2> /dev/null                   # uxen3 (Version number)
+#
+#    DRAW_A_LINE
+#}
 
 function GET_XL_INFO()
 {
@@ -225,7 +254,7 @@ function MAIN()
     CHECK_PROCESS
     RUN_DSTAT
     GET_VM_LIST
-    GET_UXEN_VERSION
+    GET_UXEN_DETAIL_VERSION
     GET_XL_INFO
     VCPUS_RATIO_CHECK
     CHECK_BONDING
