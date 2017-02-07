@@ -303,7 +303,7 @@ function GET_UXEN_LOG()
 }
 
 : '
-기능: 호스트네임, UXEN 버전 정보, 실행 중인 VM 대수, 관리IP를 출력함.
+기능: 서버 점검 결과를 간단히 요약함.
 TODO: ManagementIP를 가져오는 방법을 수정해야 함. mgmt ip의 네트워크 주소가 192.168.0인 경우도 있고 192.168.13인 경우, 172.17.237인 경우도 있다.
 '
 
@@ -311,6 +311,15 @@ function GET_SUMMARY()
 {
     echo -e "\n"
     ManagementIP=`sudo ifconfig | grep "inet addr:192.168.0." | awk -F ':'  '{ print $2 }' | awk -F ' ' '{ print $1 }'`
+
+    SYSTEM_MANUFACTURER=`dmidecode -s system-manufacturer | sed -n '3p'`
+    SYSTEM_PRODUCT_NAME=`dmidecode -s system-product-name | sed -n '3p'`
+    PROCESSOR_VERSION=`dmidecode -s processor-version | sed -n '3p'`
+
+    echo -e "\n---------------- 서버 정보  ------------------"
+    echo -e "$SYSTEM_MANUFACTURER $SYSTEM_PRODUCT_NAME\n"
+    echo -e "$PROCESSOR_VERSION\n"
+
 
     echo "호스트네임, UXEN 버전, 실행 중인 VM, 관리 IP"
     echo -e "===================================================\n"
