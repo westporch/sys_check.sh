@@ -303,11 +303,11 @@ function GET_UXEN_LOG()
 function GET_SUMMARY()
 {
     echo -e "\n"
-    Uxen2Version=`cat /home/orchard/uxen/docs/VERSION 2> /dev/null | sed '2d'`
-    Uxen2newVersion=`cat /home/orchard/uxen_new/docs/VERSION 2> /dev/null | sed '2d'`
-    Uxen3Version=`cat /opt/uxen3/docs/VERSION 2> /dev/null`
     ManagementIP=`sudo ifconfig | grep "inet addr:192.168.0." | awk -F ':'  '{ print $2 }' | awk -F ' ' '{ print $1 }'`
-    echo -e "Your_value, `uname -n`, $UXEN_DETAIL_VERSION, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
+
+    echo "호스트네임, UXEN 버전, 실행 중인 VM, 관리 IP"
+    echo -e "===================================================\n"
+    echo -e "`uname -n`, $UXEN_DETAIL_VERSION, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
 }
 
 function MAIN()
