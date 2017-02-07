@@ -59,7 +59,7 @@ function DMESG_CHECK()
     DRAW_A_LINE
 }
 
-UXEN_MAIN_VERSION=0                                                  # 전역 변수
+UXEN_MAIN_VERSION=0                                                    # 전역 변수. 0으로 초기화 함.
 
 # UXEN의 메인 버전을 확인하는 함수 (UXEN2인지 UXEN3인지 확인함)
 function GET_UXEN_MAIN_VERSION()
@@ -72,6 +72,8 @@ function GET_UXEN_MAIN_VERSION()
     fi
 }
 
+UXEN_DETAIL_VERSION=0                                                  # 전역 변수. 0으로 초기화 함.
+
 # UXEN의 세부 버전을 확인하는 함수
 function GET_UXEN_DETAIL_VERSION()
 {
@@ -81,26 +83,21 @@ function GET_UXEN_DETAIL_VERSION()
     if [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen ]]
     then
         cat /home/orchard/uxen/docs/VERSION  | sed '2d'                 # uxen2 (Version number)
+        UXEN_DETAIL_VERSION=`cat /home/orchard/uxen/docs/VERSION  | sed '2d'`
     elif [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen_new ]]
     then
         cat /home/orchard/uxen_new/docs/VERSION  | sed '2d'             # uxen2 (Version number)
+        UXEN_DETAIL_VERSION=`cat /home/orchard/uxen_new/docs/VERSION  | sed '2d'`
     elif [[ $UXEN_MAIN_VERSION = "3"  &&  -d /opt/uxen3 ]]
     then
         cat /opt/uxen3/docs/VERSION
+        UXEN_DETAIL_VERSION=`cat /opt/uxen3/docs/VERSION`
     fi
+
+    echo $UXEN_DETAIL_VERSION                                           # 버전 정보에 문자가 포함(i.e. 2.1 (rev584))되었기 때문에 return이 아닌 echo를 사용함.
 }
 
-#function GET_UXEN_VERSION()
-#{
-#    echo -e "\n--------------- UXEN_VERSION Check ----------------"
-#   
-#    cat /home/orchard/uxen/docs/VERSION  | sed '2d'            # uxen2 (Version number)
-#    cat /var/www/uxen/docs/Changelog  | head -n 2 | sed '1d'   # uxen2 (Revision number)  
-#    cat /opt/uxen3/docs/VERSION 2> /dev/null                   # uxen3 (Version number)
-#
-#    DRAW_A_LINE
-#}
-
+# xl info 명령에서 메모리 정보를 가져오는 함수
 function GET_XL_INFO()
 {
     echo -e "\n----------------- xl info --------------------"
