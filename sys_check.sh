@@ -79,10 +79,10 @@ function GET_UXEN_DETAIL_VERSION()
 
     if [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen ]]
     then
-        cat /home/orchard/uxen/docs/VERSIONS  | sed '2d'            # uxen2 (Version number)
+        cat /home/orchard/uxen/docs/VERSION  | sed '2d'            # uxen2 (Version number)
     elif [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen_new ]]
     then
-        cat /home/orchard/uxen_new/docs/VERSIONS  | sed '2d'            # uxen2 (Version number)
+        cat /home/orchard/uxen_new/docs/VERSION  | sed '2d'            # uxen2 (Version number)
     elif [[ $UXEN_MAIN_VERSION = "3"  &&  -d /opt/uxen3 ]]
     then
         cat /opt/uxen3/docs/VERSION
