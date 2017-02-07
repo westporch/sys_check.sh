@@ -59,42 +59,40 @@ function DMESG_CHECK()
     DRAW_A_LINE
 }
 
-UXEN_MAIN_VERSION=0                                                    # 전역 변수. 0으로 초기화 함.
+UXEN_MAIN_VERSION=0                                                                 # 전역 변수. 0으로 초기화 함.
 
 # UXEN의 메인 버전을 확인하는 함수 (UXEN2인지 UXEN3인지 확인함)
 function GET_UXEN_MAIN_VERSION()
 {
-    if [[ -d /home/orchard/uxen || -d /home/orchard/uxen_new ]]        # ||(OR)를 사용할 경우 세미콜론을 붙이지 않는다.
+    if [[ -d /home/orchard/uxen || -d /home/orchard/uxen_new ]]                     # ||(OR)를 사용할 경우 세미콜론을 붙이지 않는다.
     then
-        UXEN_MAIN_VERSION="2"                                          # 전역변수에 값을 할당할 때는 $를 붙이지 않는다.
+        UXEN_MAIN_VERSION="2"                                                       # 전역변수에 값을 할당할 때는 $를 붙이지 않는다.
     elif [ -d /opt/uxen3 ]; then
-        UXEN_MAIN_VERSION="3"                                          # 전역변수에 값을 할당할 때는 $를 붙이지 않는다.
+        UXEN_MAIN_VERSION="3"                                                       # 전역변수에 값을 할당할 때는 $를 붙이지 않는다.
     fi
 }
 
-UXEN_DETAIL_VERSION=0                                                  # 전역 변수. 0으로 초기화 함.
+UXEN_DETAIL_VERSION=0                                                               # 전역 변수. 0으로 초기화 함.
 
 # UXEN의 세부 버전을 확인하는 함수
 function GET_UXEN_DETAIL_VERSION()
 {
-    GET_UXEN_MAIN_VERSION                                               # GET_UXEN_MAIN_VERSION 함수에서 UXEN_MAIN_VERSION 값을 얻어온다.
+    GET_UXEN_MAIN_VERSION                                                           # GET_UXEN_MAIN_VERSION 함수에서 UXEN_MAIN_VERSION 값을 얻어온다.
     echo -e "\n--------------- UXEN_VERSION Check ----------------"
 
     if [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen ]]
     then
-        cat /home/orchard/uxen/docs/VERSION  | sed '2d'                 # uxen2 (Version number)
-        UXEN_DETAIL_VERSION=`cat /home/orchard/uxen/docs/VERSION  | sed '2d'`
+        UXEN_DETAIL_VERSION=`cat /home/orchard/uxen/docs/VERSION  | sed '2d'`       # uxen2 (Version number)
     elif [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen_new ]]
     then
-        cat /home/orchard/uxen_new/docs/VERSION  | sed '2d'             # uxen2 (Version number)
-        UXEN_DETAIL_VERSION=`cat /home/orchard/uxen_new/docs/VERSION  | sed '2d'`
+        UXEN_DETAIL_VERSION=`cat /home/orchard/uxen_new/docs/VERSION  | sed '2d'`   # uxen2 (Version number)
     elif [[ $UXEN_MAIN_VERSION = "3"  &&  -d /opt/uxen3 ]]
     then
         cat /opt/uxen3/docs/VERSION
         UXEN_DETAIL_VERSION=`cat /opt/uxen3/docs/VERSION`
     fi
 
-    echo $UXEN_DETAIL_VERSION                                           # 버전 정보에 문자가 포함(i.e. 2.1 (rev584))되었기 때문에 return이 아닌 echo를 사용함.
+    echo $UXEN_DETAIL_VERSION                                                       # 버전 정보에 문자가 포함(i.e. 2.1 (rev584))되었기 때문에 return이 아닌 echo를 사용함.
 }
 
 # xl info 명령에서 메모리 정보를 가져오는 함수
