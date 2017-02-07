@@ -198,7 +198,7 @@ function REFINE_MESSAGES()
     echo -e "Please see /tmp/refined_messages"
 }
 
-# /var/log/kern.log* 파일을 하나로 합침.
+# /var/log/kern.log* 파일을 하나로 합치고 불필요한 로그를 삭제함.
 function REFINE_KERN_LOG()
 {
     echo -e "\n---------------- Refine /var/log/kern.log* ------------------"
@@ -208,6 +208,8 @@ function REFINE_KERN_LOG()
     ls -r $LOG_HOME/kern.log*.gz | xargs zcat > $ENTIRE_KERN_LOG
     sudo cat $LOG_HOME/kern.log.1 >> $ENTIRE_KERN_LOG
     sudo cat $LOG_HOME/kern.log >> $ENTIRE_KERN_LOG
+
+    cat $ENTIRE_KERN_LOG | grep -Ev "promiscuous" > /tmp/refined_kern.log
     echo -e "Please see /tmp/refined_kern.log"
 }
 
