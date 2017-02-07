@@ -221,8 +221,7 @@ function REFINE_AUTH_LOG()
     sudo cat $LOG_HOME/auth.log.1 >> $ENTIRE_AUTH_LOG
     sudo cat $LOG_HOME/auth.log >> $ENTIRE_AUTH_LOG
 
-    # failure 또는 FAILED가 포함된 라인을 추출함
-    cat $ENTIRE_AUTH_LOG | grep -E "failure|FAILED" > /tmp/refined_auth.log 
+    cat $ENTIRE_AUTH_LOG | grep -E "failure|FAILED" > /tmp/refined_auth.log                     # failure 또는 FAILED가 포함된 라인을 추출함
     echo -e "Please see /tmp/refined_auth.log"
 }
 
@@ -256,7 +255,7 @@ function REFINE_UXEN_LOG()
     REFINED_GUNICORN_LOG=/tmp/refined_gunicorn-uxen-error.log
     REFINED_UWSGI_LOG=/tmp/uwsgi.log
     
-    if [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen ]]                                   # uxen2에서 /home/orchard/uxen 디렉토리가 존재할 경우
+    if [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen ]]                                     # uxen2에서 /home/orchard/uxen 디렉토리가 존재할 경우
     then
         echo -e "\n---------------- Refine $DEFAULT_UXEN2_API_LOG ------------------"
         ls -r $DEFAULT_UXEN2_API_LOG | xargs cat > $ENTIRE_UXEN2_API_LOG                           # uxenapi.log* 파일을 오름차순(시간) 1개로 합침
@@ -267,7 +266,7 @@ function REFINE_UXEN_LOG()
         cat $DEFAULT_GUNICORN_LOG | grep -Ev "Starting|worker|Listening" > $REFINED_GUNICORN_LOG   # gunicorn-uxen-error.log 파일에서 불필요한 내용을 제외함
         echo -e "Please see $REFINED_GUNICORN_LOG"
 
-    elif [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen_new ]]                             # uxen2에서 /home/orchard/uxen_new 디렉토리가 존재할 경우
+    elif [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen_new ]]                               # uxen2에서 /home/orchard/uxen_new 디렉토리가 존재할 경우
     then
         echo -e "\n---------------- Refine $SECOND_UXEN2_API_LOG ------------------"
         ls -r $SECOND_UXEN2_API_LOG | xargs cat > $ENTIRE_UXEN2_API_LOG                            # uxenapi.log* 파일을 오름차순(시간) 1개로 합침 
@@ -278,7 +277,7 @@ function REFINE_UXEN_LOG()
         cat $SECOND_GUNICORN_LOG | grep -Ev "Starting|worker|Listening" > $REFINED_GUNICORN_LOG    # gunicorn-uxen-error.log 파일에서 불필요한 내용을 제외함
         echo -e "Please see $REFINED_GUNICORN_LOG"    
 
-    elif [[ $UXEN_MAIN_VERSION = "3" && -d /opt/uxen3 ]]                                         # uxen3에서 /opt/uxen3 디렉토리가 존재할 경우 
+    elif [[ $UXEN_MAIN_VERSION = "3" && -d /opt/uxen3 ]]                                           # uxen3에서 /opt/uxen3 디렉토리가 존재할 경우 
     then
         echo -e "\n---------------- Refine $DEFAULT_UXEN3_API_LOG ------------------"
         ls -r $DEFAULT_UXEN3_API_LOG | xargs cat > $ENTIRE_UXEN3_API_LOG                           # uxenapi.log* 파일을 오름차순(시간) 1개로 합침
@@ -297,8 +296,8 @@ function REFINE_UXEN_LOG()
 '
 function GET_UXEN_LOG()
 {
-    GET_UXEN_MAIN_VERSION   # UXEN_MAIN_VERSION 변수에 uxen main version을 저장한다.
-    REFINE_UXEN_LOG         # REFINE_UXEN_LOG 함수에서 UXEN_MAIN_VERSION 변수를 사용함.
+    GET_UXEN_MAIN_VERSION                                                                           # UXEN_MAIN_VERSION 변수에 uxen main version을 저장한다.
+    REFINE_UXEN_LOG                                                                                 # REFINE_UXEN_LOG 함수에서 UXEN_MAIN_VERSION 변수를 사용함.
 }
 
 function GET_SUMMARY()
@@ -308,7 +307,7 @@ function GET_SUMMARY()
     Uxen2newVersion=`cat /home/orchard/uxen_new/docs/VERSION 2> /dev/null | sed '2d'`
     Uxen3Version=`cat /opt/uxen3/docs/VERSION 2> /dev/null`
     ManagementIP=`sudo ifconfig | grep "inet addr:192.168.0." | awk -F ':'  '{ print $2 }' | awk -F ' ' '{ print $1 }'`
-    echo -e "Your_value, `uname -n`, $Uxen2Version, $Uxen2newVersion, $Uxen3Version, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
+    echo -e "Your_value, `uname -n`, $UXEN_DETAIL_VERSION, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
 }
 
 function MAIN()
