@@ -300,6 +300,11 @@ function GET_UXEN_LOG()
     REFINE_UXEN_LOG                                                                                 # REFINE_UXEN_LOG 함수에서 UXEN_MAIN_VERSION 변수를 사용함.
 }
 
+: '
+기능: 호스트네임, UXEN 버전 정보, 실행 중인 VM 대수, 관리IP를 출력함.
+TODO: ManagementIP를 가져오는 방법을 수정해야 함. mgmt ip의 네트워크 주소가 192.168.0인 경우도 있고 192.168.13인 경우, 172.17.237인 경우도 있다.
+'
+
 function GET_SUMMARY()
 {
     echo -e "\n"
