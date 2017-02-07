@@ -260,7 +260,7 @@ function REFINE_UXEN_LOG()
     REFINED_GUNICORN_LOG=/tmp/refined_gunicorn-uxen-error.log
     REFINED_UWSGI_LOG=/tmp/uwsgi.log
     
-    if [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen ]                                   # uxen2에서 /home/orchard/uxen 디렉토리가 존재할 경우
+    if [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen ]]                                   # uxen2에서 /home/orchard/uxen 디렉토리가 존재할 경우
     then
         echo -e "\n---------------- Refine $DEFAULT_UXEN2_API_LOG ------------------"
         ls -r $DEFAULT_UXEN2_API_LOG | xargs cat > $ENTIRE_UXEN2_API_LOG                           # uxenapi.log* 파일을 오름차순(시간) 1개로 합침
@@ -271,7 +271,7 @@ function REFINE_UXEN_LOG()
         cat $DEFAULT_GUNICORN_LOG | grep -Ev "Starting|worker|Listening" > $REFINED_GUNICORN_LOG   # gunicorn-uxen-error.log 파일에서 불필요한 내용을 제외함
         echo -e "Please see $REFINED_GUNICORN_LOG"
 
-    elif [ $UXEN_MAIN_VERSION = "2" ] && [ -d /home/orchard/uxen_new ]                             # uxen2에서 /home/orchard/uxen_new 디렉토리가 존재할 경우
+    elif [[ $UXEN_MAIN_VERSION = "2" && -d /home/orchard/uxen_new ]]                             # uxen2에서 /home/orchard/uxen_new 디렉토리가 존재할 경우
     then
         echo -e "\n---------------- Refine $SECOND_UXEN2_API_LOG ------------------"
         ls -r $SECOND_UXEN2_API_LOG | xargs cat > $ENTIRE_UXEN2_API_LOG                            # uxenapi.log* 파일을 오름차순(시간) 1개로 합침 
@@ -282,7 +282,7 @@ function REFINE_UXEN_LOG()
         cat $SECOND_GUNICORN_LOG | grep -Ev "Starting|worker|Listening" > $REFINED_GUNICORN_LOG    # gunicorn-uxen-error.log 파일에서 불필요한 내용을 제외함
         echo -e "Please see $REFINED_GUNICORN_LOG"    
 
-    elif [ $UXEN_MAIN_VERSION = "3" ] && [ -d /opt/uxen3 ]                                         # uxen3에서 /opt/uxen3 디렉토리가 존재할 경우 
+    elif [[ $UXEN_MAIN_VERSION = "3" && -d /opt/uxen3 ]]                                         # uxen3에서 /opt/uxen3 디렉토리가 존재할 경우 
     then
         echo -e "\n---------------- Refine $DEFAULT_UXEN3_API_LOG ------------------"
         ls -r $DEFAULT_UXEN3_API_LOG | xargs cat > $ENTIRE_UXEN3_API_LOG                           # uxenapi.log* 파일을 오름차순(시간) 1개로 합침
