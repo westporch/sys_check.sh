@@ -238,7 +238,7 @@ function GET_SYSTEM_LOG()
     REFINE_AUTH_LOG
 }
 
-:' uxenapi.log에서 불필요한 내용은 삭제하는 함수
+: ' uxenapi.log에서 불필요한 내용은 삭제하는 함수
    최초 작성: 2017.02.06
    TODO: ENTIRE_UXEN_API_LOG, REFINED_UXEN_API_LOG 파일을 만드는 함수를 각각 분리(?)
 '
@@ -293,7 +293,7 @@ function REFINE_UXEN_LOG()
     fi
 }
 
-:' 역할: UXEN 로그를 가져오는 함수
+: ' 역할: UXEN 로그를 가져오는 함수
    세부 설명: MAIN 함수에서 좀 더 쉽게 이해할 수 있도록 REFINE_UXEN_LOG를 GET_UXEN_LOG로 wrapping 함.
    최초 작성: 2017.02.06 
 '
