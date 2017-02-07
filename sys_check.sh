@@ -66,9 +66,9 @@ function GET_UXEN_MAIN_VERSION()
 {
     if [[ -d /home/orchard/uxen || -d /home/orchard/uxen_new ]]        # ||(OR)를 사용할 경우 세미콜론을 붙이지 않는다.
     then
-        $UXEN_MAIN_VERSION=2
+        UXEN_MAIN_VERSION="2"                                          # 전역변수에 값을 할당할 때는 $를 붙이지 않는다.
     elif [ -d /opt/uxen3 ]; then
-        $UXEN_MAIN_VERSION=3
+        UXEN_MAIN_VERSION="3"                                          # 전역변수에 값을 할당할 때는 $를 붙이지 않는다.
     fi
 }
 
