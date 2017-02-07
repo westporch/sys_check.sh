@@ -321,7 +321,7 @@ function GET_SUMMARY()
     echo -e "$PROCESSOR_VERSION\n"
 
 
-    echo "호스트네임, UXEN 버전, 실행 중인 VM, 관리 IP"
+    echo -e "\n호스트네임, UXEN 버전, 실행 중인 VM, 관리 IP"
     echo -e "===================================================\n"
     echo -e "`uname -n`, $UXEN_DETAIL_VERSION, `sudo xl li | sed '1,2d' | wc -l`, $ManagementIP"
 }
