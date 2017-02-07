@@ -299,7 +299,8 @@ function REFINE_UXEN_LOG()
 '
 function GET_UXEN_LOG()
 {
-    REFINE_UXEN_LOG
+    GET_UXEN_MAIN_VERSION   # UXEN_MAIN_VERSION 변수에 uxen main version을 저장한다.
+    REFINE_UXEN_LOG         # REFINE_UXEN_LOG 함수에서 UXEN_MAIN_VERSION 변수를 사용함.
 }
 
 function GET_SUMMARY()
