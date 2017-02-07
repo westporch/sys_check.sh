@@ -287,9 +287,11 @@ function REFINE_UXEN_LOG()
         echo -e "\n---------------- Refine $DEFAULT_UXEN3_API_LOG ------------------"
         ls -r $DEFAULT_UXEN3_API_LOG | xargs cat > $ENTIRE_UXEN3_API_LOG                           # uxenapi.log* 파일을 오름차순(시간) 1개로 합침
         cat $ENTIRE_UXEN3_API_LOG | grep -Ev "models|viewsets|vmiface" > $REFINED_UXEN3_API_LOG    # ENTIRE_UXEN3_API_LOG 파일에서 불필요한 내용을 제외함
+        echo -e "Please see $EFINED_UXEN3_API_LOG"
 
         echo -e "\n---------------- Refine $DEFAULT_UWSGI_LOG  ------------------"
         cat $DEFAULT_UWSGI_LOG | grep -Ev "generated" > $REFINED_UWSGI_LOG                         # uwsgi.log 파일에서 불필요한 내용을 제외함
+        echo -e "Please see $REFINED_UWSGI_LOG"
     fi
 }
 
