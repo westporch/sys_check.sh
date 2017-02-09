@@ -312,12 +312,13 @@ function GET_SUMMARY()
     echo -e "\n"
     ManagementIP=`sudo ifconfig | grep "inet addr:192.168.0." | awk -F ':'  '{ print $2 }' | awk -F ' ' '{ print $1 }'`
 
-    SYSTEM_MANUFACTURER=`dmidecode -s system-manufacturer | sed -n '3p'`
-    SYSTEM_PRODUCT_NAME=`dmidecode -s system-product-name | sed -n '3p'`
-    PROCESSOR_VERSION=`dmidecode -s processor-version | sed -n '3p'`
+    SYSTEM_MANUFACTURER=`dmidecode -s system-manufacturer`
+    SYSTEM_PRODUCT_NAME=`dmidecode -s system-product-name`
+    PROCESSOR_VERSION=`dmidecode -s processor-version`
 
     echo -e "\n---------------- 서버 정보  ------------------"
     echo -e "$SYSTEM_MANUFACTURER $SYSTEM_PRODUCT_NAME\n"
+    echo -e "$SYSTEM_PRODUCT_NAME\n"
     echo -e "$PROCESSOR_VERSION\n"
 
 
