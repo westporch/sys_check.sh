@@ -194,7 +194,7 @@ function REFINE_MESSAGES()
     sudo cat $LOG_HOME/messages.1 >> $ENTIRE_MESSAGE_LOG
     sudo cat $LOG_HOME/messages >> $ENTIRE_MESSAGE_LOG
 
-    cat $ENTIRE_MESSAGE_LOG | grep -Ev "rsyslogd|forwarding|promiscuous|vif|IPv6" > /tmp/refined_messages
+    cat $ENTIRE_MESSAGE_LOG | grep -Ev "rsyslogd|forwarding|promiscuous|vif|IPv6|usb|USB|hub" > /tmp/refined_messages
     echo -e "Please see /tmp/refined_messages"
 }
 
