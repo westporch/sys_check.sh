@@ -209,7 +209,7 @@ function REFINE_KERN_LOG()
     sudo cat $LOG_HOME/kern.log.1 >> $ENTIRE_KERN_LOG
     sudo cat $LOG_HOME/kern.log >> $ENTIRE_KERN_LOG
 
-    cat $ENTIRE_KERN_LOG | grep -Ev "promiscuous|vif|IPv6|tg3|hub|usb|USB" > /tmp/refined_kern.log
+    cat $ENTIRE_KERN_LOG | grep -Ev "promiscuous|vif|IPv6|tg3|hub|usb|USB|entered" > /tmp/refined_kern.log
     echo -e "Please see /tmp/refined_kern.log"
 }
 
