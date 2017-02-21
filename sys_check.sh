@@ -194,7 +194,7 @@ function REFINE_MESSAGES()
     sudo cat $LOG_HOME/messages.1 >> $ENTIRE_MESSAGE_LOG
     sudo cat $LOG_HOME/messages >> $ENTIRE_MESSAGE_LOG
 
-    cat $ENTIRE_MESSAGE_LOG | grep -Ev "rsyslogd|forwarding|promiscuous|vif|IPv6|usb|USB|hub" > /tmp/refined_messages
+    cat $ENTIRE_MESSAGE_LOG | grep -Ev "rsyslogd|forwarding|promiscuous|vif|IPv6|usb|USB|hub|entered" > /tmp/refined_messages
     echo -e "Please see /tmp/refined_messages"
 }
 
@@ -209,7 +209,7 @@ function REFINE_KERN_LOG()
     sudo cat $LOG_HOME/kern.log.1 >> $ENTIRE_KERN_LOG
     sudo cat $LOG_HOME/kern.log >> $ENTIRE_KERN_LOG
 
-    cat $ENTIRE_KERN_LOG | grep -Ev "promiscuous|vif|IPv6|tg3|hub|usb|USB|entered" > /tmp/refined_kern.log
+    cat $ENTIRE_KERN_LOG | grep -Ev "promiscuous|vif|IPv6|tg3|hub|usb|USB|entered|pdu" > /tmp/refined_kern.log
     echo -e "Please see /tmp/refined_kern.log"
 }
 
